@@ -17,6 +17,7 @@ class i_aaa_ui extends Component {
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Welcome to React Native!
+          Zeynom
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.android.js
