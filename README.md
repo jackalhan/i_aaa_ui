@@ -1,3 +1,3 @@
-# i_aaa_ui
+# i-aaa-ui
 Mobile modules of Intelligent Accident Avoidance Application
  
