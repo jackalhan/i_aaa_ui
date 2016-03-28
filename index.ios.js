@@ -5,5 +5,5 @@ var {
   AppRegistry
 } = React;
 
-var test = require('./test');
-AppRegistry.registerComponent('i_aaa_ui', () => test);
+var simulation = require('./simulation');
+AppRegistry.registerComponent('i_aaa_ui', () => simulation);
