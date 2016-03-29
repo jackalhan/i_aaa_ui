@@ -191,7 +191,7 @@ var styles = StyleSheet.create({
     fontWeight:'bold'
   },
   formLayer:{
-    flex:5,    
+    flex:5,
     flexWrap: 'nowrap',
   }
 });
