@@ -21,7 +21,7 @@ var simulation = React.createClass({
     return (
       <View style={styles.container}>
 
-        <Image style={styles.banner} source={{uri: 'http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image2.jpg'}} />
+        <Image style={styles.banner} source={require('./banner2.png')} />
 
         <Text style={styles.form}> FORM </Text>
 
