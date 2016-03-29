@@ -21,7 +21,7 @@ var simulation = React.createClass({
     return (
       <View style={styles.container}>
 
-        <Image style={styles.banner} source={require('./banner2.png')} />
+        <Image style={styles.banner} source={{uri:'https://raw.githubusercontent.com/jackalhan/i_aaa_ui/master/android/app/src/main/res/drawable-xxhdpi/banner2.png'}} />
 
         <Text style={styles.form}> FORM </Text>
 
@@ -37,22 +37,21 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#343e4b',
     borderColor: '#0099AA',
-    borderWidth: 5
+    borderWidth: 0
   },
   banner: {
-    flex: 2,
+    flex: 3,
     flexDirection: 'column',
     backgroundColor: 'black',
     borderColor: '#0099AA',
-    borderWidth: 5,
-    opacity:0.8,
+    borderWidth: 0,
     alignItems:'stretch'
   },
   form: {
-    flex:4,
-    borderColor: '#AA0099',
+    flex:5,
+    borderColor: '#343e4b',
     borderWidth: 5,
     textAlign:'center',
     fontSize: 24
