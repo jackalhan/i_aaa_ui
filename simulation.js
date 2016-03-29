@@ -21,7 +21,7 @@ var simulation = React.createClass({
     return (
       <View style={styles.container}>
 
-        <Image style={styles.banner} source={{uri:'https://raw.githubusercontent.com/jackalhan/i_aaa_ui/master/android/app/src/main/res/drawable-xxhdpi/banner2.png'}} />
+        <Image style={styles.banner} source={{uri:'https://raw.githubusercontent.com/jackalhan/i_aaa_ui/master/android/app/src/main/res/drawable-xxhdpi/banner.png'}} />
 
         <Text style={styles.form}> FORM </Text>
 
