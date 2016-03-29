@@ -1817,7 +1817,7 @@ containing a value of this type.
         public static final int abc_textfield_search_activated_mtrl_alpha=0x7f02003b;
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f02003c;
         public static final int abc_textfield_search_material=0x7f02003d;
-        public static final int banner2=0x7f02003e;
+        public static final int banner=0x7f02003e;
         public static final int notification_template_icon_bg=0x7f02003f;
     }
     public static final class id {

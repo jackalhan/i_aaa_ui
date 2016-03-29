@@ -21,7 +21,11 @@ var simulation = React.createClass({
     return (
       <View style={styles.container}>
 
-        <Image style={styles.banner} source={{uri:'https://raw.githubusercontent.com/jackalhan/i_aaa_ui/master/android/app/src/main/res/drawable-xxhdpi/banner.png'}} />
+        <Image style={styles.banner}
+           onLoadStart={(e) => this.setState({loading: true})}
+            source={{uri:'https://raw.githubusercontent.com/jackalhan/i_aaa_ui/master/android/app/src/main/res/drawable-xxhdpi/bg.png'}}
+            onProgress={(e) => this.setState({progress: Math.round(100 * e.nativeEvent.loaded / e.nativeEvent.total)})}
+         onLoad={() => this.setState({loading: false, error: false})} />
 
         <Text style={styles.form}> FORM </Text>
 
