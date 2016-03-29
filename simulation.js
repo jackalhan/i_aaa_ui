@@ -9,23 +9,61 @@ var {
   View,
   TextInput,
   Image,
-  Switch
+  Switch,
+  TouchableHighlight
 } = React;
+
 
 
 var simulation = React.createClass({
   getInitialState: function() {
     return {
       switchIsOn : false,
-
+      pressing:false,
+      toggled: false
 
     };
   },
+//   _onPressIn: function() {
+//
+// this.setState({pressing: true});
+//
+// },
+//
+// _onPressOut: function() {
+//
+// this.setState({pressing: false});
+//
+// },
+_onPress:function(){
+if (this.state.pressing === true)
+{
+  this.setState({pressing: false});
+}
+else {
+  this.setState({pressing: true});
+}
+},
   render: function() {
+    var executeText = null;
      if (this.state.switchIsOn === true)
      {
-       ToastAndroid.show('It will be executing via simulation form ! ', ToastAndroid.LONG)
+       ToastAndroid.show('It will be executing via simulation form ! ', ToastAndroid.SHORT);
      }
+    //  else {
+    //    //ToastAndroid.show('It will be executing via background process ! ', ToastAndroid.SHORT)
+     //
+    //  }
+
+     if (this.state.pressing === false)
+     {
+       executeText = 'Execute Process';
+     }
+     if (this.state.pressing === true)
+     {
+       executeText = 'Stop Process';
+     }
+
     return (
       <View style={styles.container}>
 
@@ -37,7 +75,7 @@ var simulation = React.createClass({
           onLoad={() => this.setState({loading: false, error: false})} />
         <View style={styles.form}>
           <View style={styles.setting}>
-            <Text style={styles.settingText}>
+            <Text style={styles.text}>
               Execute by filling simulation form?
             </Text>
             <Switch
@@ -48,6 +86,38 @@ var simulation = React.createClass({
               tintColor="#ffffff"
               onTintColor="#ffffff"
               />
+
+          </View>
+          <View style={styles.buttonLayer}>
+            <TouchableHighlight style={styles.button}
+                                onPress={this._onPress}>
+                                <View style={styles.button}>
+                <Text style={styles.buttonText}>
+                {executeText}
+                </Text>
+                </View>
+            </TouchableHighlight>
+          </View>
+
+
+          <View style={styles.formLayer}>
+            <View style={styles.formFields}>
+            <Text style={styles.text}>
+            Latitude
+            </Text>
+            <TextInput style={styles.input} />
+
+            <Text style={styles.text}>
+            Longtitude
+            </Text>
+            <TextInput style={styles.input} />
+
+            <Text style={styles.text}>
+            Vehicle Speed (mile)
+            </Text>
+            <TextInput style={styles.input} />
+
+            </View>
           </View>
         </View>
       </View>
@@ -58,18 +128,23 @@ var simulation = React.createClass({
 var baseFontSize = 15;
 var windowSize = dimensions.get('window');
 var styles = StyleSheet.create({
+  input: {
+    borderRadius:10,
+    backgroundColor:'white',
+    height:20,
+    width:120,
+    color:'black'
+
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#343e4b',
-    // borderColor: '#eeeff0',
-    // borderWidth: 0
+    backgroundColor: '#343e4b'
   },
   banner: {
     flex: 3,
     flexDirection: 'column',
     backgroundColor: 'black',
-    // borderColor: '#eeeff0',
     alignItems:'stretch'
   },
   form: {
@@ -91,13 +166,34 @@ var styles = StyleSheet.create({
     marginLeft : 10
 
   },
-  settingText:{
+  text:{
     flex:3,
     color: '#eeeff0',
     fontSize: baseFontSize
 
-  }
+  },
+  button:{
+    borderRadius:10,
+    backgroundColor:'white',
+    height:20,
+    width:120,
+    alignItems:'center',
 
+  },
+  buttonLayer:{
+    borderRadius:10,
+    backgroundColor:'#eeeff0',
+
+  },
+  buttonText:{
+    color: '#343e4b',
+    fontSize: baseFontSize -2,
+    fontWeight:'bold'
+  },
+  formLayer:{
+    flex:5,    
+    flexWrap: 'nowrap',
+  }
 });
 
 module.exports = simulation;
