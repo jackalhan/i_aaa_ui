@@ -17,6 +17,7 @@ var {
 
 var I_AAA_SERVICE_LINK = 'http://192.168.56.1:8080/anyAccidentOverHere?lat=#lat#&lon=#lon#&speedOfVehicle=#speed#';
 var simulation = React.createClass({
+  watchID: (null: ?number),
   getInitialState: function() {
     return {
       isAutoProcess : true,
@@ -24,9 +25,34 @@ var simulation = React.createClass({
       inputDefaultValue: 'Please enter a value',
       longitude : 'Please enter a value',
       latitude : 'Please enter a value',
-      speed:'Please enter a value'
+      speed:'Please enter a value',
+      initialPosition: 'unknown',
+      lastPosition: 'unknown',
     };
   },
+
+  componentDidMount: function() {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          var initialPosition = JSON.stringify(position);
+          this.setState({initialPosition});
+        },
+        (error) => Alert.alert(error + error.message),
+        {distanceFilter:1000,timeout: 20000, maximumAge: 1000}
+      );
+      Alert.alert('conponen did mount ' + this.state.initialPosition.value);
+      this.watchID = navigator.geolocation.watchPosition((position) => {
+        var lastPosition = JSON.stringify(position);
+        this.setState({lastPosition});
+      });
+      Alert.alert('watchId  ' + this.state.lastPosition.value);
+    },
+
+    componentWillUnmount: function() {
+  navigator.geolocation.clearWatch(this.watchID);
+  Alert.alert('componentWillUnmount ' + this.watchID.value);
+  },
+
   _onPressExecuteBackgroundProcess:function(){
     if (this.state.executeBackgroundProcess === true)
     {
@@ -198,6 +224,16 @@ render: function() {
         <View style={styles.view_brform}/>
         <View style={styles.view_brform}/>
         {contentAutoProcess}
+      </View>
+      <View>
+        <Text>
+          <Text> Initial position: </Text>
+          {this.state.initialPosition}
+        </Text>
+        <Text>
+          {this.state.lastPosition}
+          <Text>Current position: </Text>
+        </Text>
       </View>
     </View>
   );
