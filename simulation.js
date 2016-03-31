@@ -282,7 +282,7 @@ var styles = StyleSheet.create({
   //*****************
   button_general:{
     borderRadius:10,
-    backgroundColor:'yellow',
+    backgroundColor:'#f0b431',
     height:25,
     width:180,
   },
