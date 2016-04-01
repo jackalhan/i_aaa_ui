@@ -1,6 +1,6 @@
 var React = require('react-native');
-
 var dimensions = require('Dimensions');
+
 
 var {
   ToastAndroid,
@@ -14,10 +14,17 @@ var {
   Alert
 } = React;
 
+//UNCOMMENT FOR LOCAL SERVER
+//var SERVER_URI = 'http://192.168.56.1:8080';
 
-var I_AAA_SERVICE_LINK = 'http://192.168.56.1:8080/anyAccidentOverHere?lat=#lat#&lon=#lon#&speedOfVehicle=#speed#';
+//UNCOMMENT FOR PROD SERVER AT UALR
+var SERVER_URI = 'http://bvm-u1-p.host.ualr.edu:8080';
+
+var I_AAA_SERVICE_LINK = SERVER_URI + '/anyAccidentOverHere?lat=#lat#&lon=#lon#&speedOfVehicle=#speed#';
 var simulation = React.createClass({
+
   watchID: (null: ?number),
+
   getInitialState: function() {
     return {
       isAutoProcess : true,
@@ -26,31 +33,49 @@ var simulation = React.createClass({
       longitude : 'Please enter a value',
       latitude : 'Please enter a value',
       speed:'Please enter a value',
-      initialPosition: 'unknown',
-      lastPosition: 'unknown',
+      initialPosition: '',
+      lastPosition: '',
+      initialPositionLat:'',
+      initialPositionLon:'',
+      lastPositionLat:'',
+      lastPositionLon:'',
+      propTypes: {
+      onGetCoords: React.PropTypes.func.isRequired
+      },
     };
   },
 
   componentDidMount: function() {
+      // navigator.geolocation.getCurrentPosition(
+      //   (initialPosition) => {
+      //     //var initialPosition = JSON.stringify(position);
+      //     //this.setState({initialPosition});
+      //     this.props.onGetCoords(initialPosition.coords.latitude, initialPosition.coords.longitude);
+      //   },
+      //
+      //   (error) => Alert.alert(error + error.message),
+      //   //{distanceFilter:1000,timeout: 20000, maximumAge: 1000}
+      //   {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      // );
+      // this.watchID = navigator.geolocation.watchPosition((position) => {
+      //   var lastPosition = JSON.stringify(position);
+      //   this.setState({lastPosition});
+      // });
+
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          var initialPosition = JSON.stringify(position);
-          this.setState({initialPosition});
-        },
-        (error) => Alert.alert(error + error.message),
-        {distanceFilter:1000,timeout: 20000, maximumAge: 1000}
-      );
-      Alert.alert('conponen did mount ' + this.state.initialPosition.value);
-      this.watchID = navigator.geolocation.watchPosition((position) => {
-        var lastPosition = JSON.stringify(position);
-        this.setState({lastPosition});
-      });
-      Alert.alert('watchId  ' + this.state.lastPosition.value);
+  (initialPosition) => {
+    this.props.onGetCoords(initialPosition.coords.latitude,
+      initialPosition.coords.longitude);
+  },
+  (error) => {alert(error.message)},
+  {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+);
     },
+
+
 
     componentWillUnmount: function() {
   navigator.geolocation.clearWatch(this.watchID);
-  Alert.alert('componentWillUnmount ' + this.watchID.value);
   },
 
   _onPressExecuteBackgroundProcess:function(){
@@ -71,7 +96,8 @@ var simulation = React.createClass({
     fetch(I_AAA_REPLACE_URI).
     then((response) => response.json()).
     then((responseJSON) => {
-      //console.log(responseJSON);
+      console.log(responseJSON);
+      console.log(responseJSON.text);
       Alert.alert(responseJSON.text);
         //ToastAndroid.show(responseJSON.id + ' ' + responseJSON.text, ToastAndroid.SHORT);
       this.setState({
@@ -100,13 +126,32 @@ clearTextSpeed:function(){
 render: function() {
   var buttonTextForBackgroundProcess = null;
   var contentManualProcess, contentAutoProcess = null;
+  var contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
+  var contentBackgroundProcessLastLabel,contentBackgroundProcessLastValue = null;
   if (this.state.executeBackgroundProcess === false)
   {
     buttonTextForBackgroundProcess = 'Start Background Process';
+    contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
+    contentBackgroundProcessLastLabel,contentBackgroundProcessLastValue = null;
   }
+  //
   if (this.state.executeBackgroundProcess === true)
   {
     buttonTextForBackgroundProcess = 'Stop Background Process';
+    Alert.alert(this.state.initialPosition);
+    if (this.state.initialPosition !== '')
+    {
+      contentBackgroundProcessInitialLabel = 'Initial position (Lat, Lon)';
+      contentBackgroundProcessInitialValue = this.state.initialPosition ;// + ',' + initialPosition.coords.longitude;
+      Alert.alert(contentBackgroundProcessInitialValue.coords);
+    }
+    if (this.state.lastPosition !== '')
+    {
+      contentBackgroundProcessLastLabel = 'Last position (Lat, Lon)';
+      contentBackgroundProcessLastValue = this.state.lastPosition; //coords.latitude + ',' + lastPosition.coords.longitude;
+      Alert.alert(this.props.onGetCoords);
+    }
+
   }
 
   if (this.state.isAutoProcess === true)
@@ -224,16 +269,13 @@ render: function() {
         <View style={styles.view_brform}/>
         <View style={styles.view_brform}/>
         {contentAutoProcess}
-      </View>
-      <View>
-        <Text>
-          <Text> Initial position: </Text>
-          {this.state.initialPosition}
-        </Text>
-        <Text>
-          {this.state.lastPosition}
-          <Text>Current position: </Text>
-        </Text>
+        <View style={styles.view_form}>
+        <Text style={styles.text_general}>{contentBackgroundProcessInitialLabel}</Text>
+        <Text style={styles.text_general_custom}>{contentBackgroundProcessInitialValue}</Text>
+        <View style={styles.view_form}></View>
+        <Text style={styles.text_general}>{contentBackgroundProcessLastLabel}</Text>
+        <Text style={styles.text_general_custom}>{contentBackgroundProcessLastValue}</Text>
+        </View>
       </View>
     </View>
   );
@@ -308,7 +350,10 @@ var styles = StyleSheet.create({
     color: '#eeeff0',
     fontSize: baseFontSize
   },
-
+  text_general_custom:{
+    color: '#f0b431',
+    fontSize: baseFontSize
+  },
 
 
 
