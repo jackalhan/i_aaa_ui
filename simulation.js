@@ -23,7 +23,16 @@ var SERVER_URI = 'http://bvm-u1-p.host.ualr.edu:8080';
 var I_AAA_SERVICE_LINK = SERVER_URI + '/anyAccidentOverHere?lat=#lat#&lon=#lon#&speedOfVehicle=#speed#';
 var simulation = React.createClass({
 
-  watchID: (null: ?number),
+
+  //watchID: (null: ?number),
+  constructor(super) {
+    super(props);
+    this.state = {
+      position : {
+          coords:{}
+      }
+    };
+  }
 
   getInitialState: function() {
     return {
@@ -42,6 +51,7 @@ var simulation = React.createClass({
       propTypes: {
       onGetCoords: React.PropTypes.func.isRequired
       },
+      annotations:[{}]
     };
   },
 
@@ -62,21 +72,28 @@ var simulation = React.createClass({
       //   this.setState({lastPosition});
       // });
 
+//       navigator.geolocation.getCurrentPosition(
+//   (initialPosition) => {
+//     this.props.onGetCoords(initialPosition.coords.latitude,
+//       initialPosition.coords.longitude);
+//   },
+//   (error) => {alert(error.message)},
+//   {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+// );
       navigator.geolocation.getCurrentPosition(
-  (initialPosition) => {
-    this.props.onGetCoords(initialPosition.coords.latitude,
-      initialPosition.coords.longitude);
-  },
-  (error) => {alert(error.message)},
+  (position) => this.setState({position}),
+  (error) => alert(error.message),
   {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
 );
+navigator.geolocation.watchPosition((position) => { this.setState({position}) });
+
     },
 
 
 
-    componentWillUnmount: function() {
-  navigator.geolocation.clearWatch(this.watchID);
-  },
+  //   componentWillUnmount: function() {
+  // navigator.geolocation.clearWatch(this.watchID);
+  // },
 
   _onPressExecuteBackgroundProcess:function(){
     if (this.state.executeBackgroundProcess === true)
@@ -142,7 +159,7 @@ render: function() {
     if (this.state.initialPosition !== '')
     {
       contentBackgroundProcessInitialLabel = 'Initial position (Lat, Lon)';
-      contentBackgroundProcessInitialValue = this.state.initialPosition ;// + ',' + initialPosition.coords.longitude;
+      contentBackgroundProcessInitialValue =  this.state.position.coords.latitude + ',' this.state.position.coords.longitude; //this.state.initialPosition ;// + ',' + initialPosition.coords.longitude;
       Alert.alert(contentBackgroundProcessInitialValue.coords);
     }
     if (this.state.lastPosition !== '')
