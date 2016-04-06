@@ -25,68 +25,60 @@ var simulation = React.createClass({
 
 
   //watchID: (null: ?number),
-  constructor(super) {
-    super(props);
-    this.state = {
-      position : {
-          coords:{}
-      }
-    };
-  }
+
 
   getInitialState: function() {
     return {
-      isAutoProcess : true,
+      isManualProcess : true,
       executeBackgroundProcess:false,
+      test : null,
       inputDefaultValue: 'Please enter a value',
       longitude : 'Please enter a value',
-      latitude : 'Please enter a value',
+      latitude :'Please enter a value',
       speed:'Please enter a value',
-      initialPosition: '',
-      lastPosition: '',
-      initialPositionLat:'',
-      initialPositionLon:'',
-      lastPositionLat:'',
-      lastPositionLon:'',
+      currentRegion:
+      {
+        latitude:-0.0,
+        longitude:-0.0
+      },
       propTypes: {
       onGetCoords: React.PropTypes.func.isRequired
       },
-      annotations:[{}]
+      annotations:[{}],
+      position : {
+          coords:{}
+      }
+
     };
   },
 
   componentDidMount: function() {
-      // navigator.geolocation.getCurrentPosition(
-      //   (initialPosition) => {
-      //     //var initialPosition = JSON.stringify(position);
-      //     //this.setState({initialPosition});
-      //     this.props.onGetCoords(initialPosition.coords.latitude, initialPosition.coords.longitude);
-      //   },
-      //
-      //   (error) => Alert.alert(error + error.message),
-      //   //{distanceFilter:1000,timeout: 20000, maximumAge: 1000}
-      //   {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-      // );
-      // this.watchID = navigator.geolocation.watchPosition((position) => {
-      //   var lastPosition = JSON.stringify(position);
-      //   this.setState({lastPosition});
-      // });
 
-//       navigator.geolocation.getCurrentPosition(
-//   (initialPosition) => {
-//     this.props.onGetCoords(initialPosition.coords.latitude,
-//       initialPosition.coords.longitude);
-//   },
-//   (error) => {alert(error.message)},
-//   {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-// );
       navigator.geolocation.getCurrentPosition(
-  (position) => this.setState({position}),
-  (error) => alert(error.message),
-  {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-);
-navigator.geolocation.watchPosition((position) => { this.setState({position}) });
 
+  (position) => {
+    console.log(position);
+    this.setState({currentRegion: {
+                    //position,
+                    latitude : position.coords.latitude,
+                    longitude : position.coords.longitude,
+                }});
+  },
+  (error) => alert(error.message),
+  {enableHighAccuracy: true, timeout: 200, maximumAge: 1000, distanceFilter:250}
+);
+navigator.geolocation.watchPosition((position) => {
+  console.log(position);
+      this.setState({currentRegion: {
+                      //position,
+                      latitude : position.coords.latitude,
+                      longitude : position.coords.longitude,
+                  }});
+      // this.setState({latitude : this.state.position.coords.latitude});
+      // this.setState({longitude : this.state.position.coords.longitude});
+      Alert.alert(this.state.currentRegion.latitude );//Alert.alert('burasi kullanilacak.');
+
+    });
     },
 
 
@@ -98,7 +90,12 @@ navigator.geolocation.watchPosition((position) => { this.setState({position}) })
   _onPressExecuteBackgroundProcess:function(){
     if (this.state.executeBackgroundProcess === true)
     {
-      this.setState({executeBackgroundProcess: false});
+      this.setState({
+                      executeBackgroundProcess: false,
+                      latitude : this.state.inputDefaultValue,
+                      longitude : this.state.inputDefaultValue,
+                      speed : this.state.inputDefaultValue
+                     });
     }
     else {
       this.setState({executeBackgroundProcess: true});
@@ -106,7 +103,7 @@ navigator.geolocation.watchPosition((position) => { this.setState({position}) })
   },
 
   _onPressQueryAccident:function(){
-    //Alert.alert(this.state.longitude.replace('2', 'TTTTT') + '---- ' + this.state.latitude + '------' + this.state.speed);
+
     var I_AAA_REPLACE_URI = I_AAA_SERVICE_LINK.replace('#lat#',this.state.latitude).replace('#lon#',this.state.longitude).replace('#speed#', this.state.speed);
     Alert.alert(I_AAA_REPLACE_URI);
     console.log("I_AAA API is calling via " + I_AAA_REPLACE_URI);
@@ -115,12 +112,11 @@ navigator.geolocation.watchPosition((position) => { this.setState({position}) })
     then((responseJSON) => {
       console.log(responseJSON);
       console.log(responseJSON.text);
-      Alert.alert(responseJSON.text);
-        //ToastAndroid.show(responseJSON.id + ' ' + responseJSON.text, ToastAndroid.SHORT);
+      //ToastAndroid.show(responseJSON.id + ' ' + responseJSON.text, ToastAndroid.SHORT);
       this.setState({
-        longitude : 'Please enter a value',
-        latitude : 'Please enter a value',
-        speed:'Please enter a value'
+        longitude : this.state.inputDefaultValue,
+        latitude : this.state.inputDefaultValue,
+        speed:this.state.inputDefaultValue
       });
     }
   )
@@ -142,41 +138,17 @@ clearTextSpeed:function(){
 
 render: function() {
   var buttonTextForBackgroundProcess = null;
-  var contentManualProcess, contentAutoProcess = null;
+  var contentAutoProcess, contentManualProcess = null;
   var contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
-  var contentBackgroundProcessLastLabel,contentBackgroundProcessLastValue = null;
-  if (this.state.executeBackgroundProcess === false)
+  if (this.state.isManualProcess === true)
   {
-    buttonTextForBackgroundProcess = 'Start Background Process';
-    contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
-    contentBackgroundProcessLastLabel,contentBackgroundProcessLastValue = null;
-  }
-  //
-  if (this.state.executeBackgroundProcess === true)
-  {
-    buttonTextForBackgroundProcess = 'Stop Background Process';
-    Alert.alert(this.state.initialPosition);
-    if (this.state.initialPosition !== '')
-    {
-      contentBackgroundProcessInitialLabel = 'Initial position (Lat, Lon)';
-      contentBackgroundProcessInitialValue =  this.state.position.coords.latitude + ',' this.state.position.coords.longitude; //this.state.initialPosition ;// + ',' + initialPosition.coords.longitude;
-      Alert.alert(contentBackgroundProcessInitialValue.coords);
-    }
-    if (this.state.lastPosition !== '')
-    {
-      contentBackgroundProcessLastLabel = 'Last position (Lat, Lon)';
-      contentBackgroundProcessLastValue = this.state.lastPosition; //coords.latitude + ',' + lastPosition.coords.longitude;
-      Alert.alert(this.props.onGetCoords);
-    }
+    contentAutoProcess = null;
+    ToastAndroid.show('It will be executing via simulation form!', ToastAndroid.SHORT);
+    contentManualProcess =
+    <View style={styles.view_form_fields}>
 
-  }
-
-  if (this.state.isAutoProcess === true)
-  {
-    contentManualProcess = null;
-    ToastAndroid.show('It will be executing via background process ! ', ToastAndroid.SHORT)
-    contentAutoProcess =
-    <View style={styles.view_form}>
+      <View style={styles.view_brform}/>
+      <View style={styles.view_brform}/>
       <Text style={styles.text_general}>
         Longitude
       </Text>
@@ -222,10 +194,9 @@ render: function() {
         onFocus = {this.clearTextSpeed}
         onChangeText={(speed) => this.setState({speed})}
         value={this.state.speed}/>
-
-      <View style={styles.view_brform}/>
-      <View style={styles.view_brform}/>
-      <View style={styles.view_brform}/>
+        <View style={styles.view_brform}/>
+        <View style={styles.view_brform}/>
+        <View style={styles.view_brform}/>
       <View>
         <TouchableHighlight
           style={styles.button_general}
@@ -241,10 +212,31 @@ render: function() {
     ;
 
   }
-  if (this.state.isAutoProcess === false) {
-    contentAutoProcess = null;
-    ToastAndroid.show('It will be executing via simulation form ! ', ToastAndroid.SHORT);
-    contentManualProcess =
+  if (this.state.isManualProcess === false) {
+
+    contentManualProcess = null;
+    contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
+    ToastAndroid.show('It will be executing via background process! ', ToastAndroid.SHORT)
+
+    if (this.state.executeBackgroundProcess === false)
+    {
+      buttonTextForBackgroundProcess = 'Start Background Process';
+      contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
+
+
+    }
+    if (this.state.executeBackgroundProcess === true)
+    {
+      buttonTextForBackgroundProcess = 'Stop Background Process';
+      if (this.state.latitude !== this.state.inputDefaultValue)
+      {
+        contentBackgroundProcessInitialLabel = 'Latest updated position (Lat, Lon) and speed';
+        contentBackgroundProcessInitialValue =  this.state.position.coords.latitude + ',' + this.state.position.coords.longitude + ' ---->  0 mph';
+      }
+
+    }
+
+    contentAutoProcess =
     <View style={styles.view_form}>
       <TouchableHighlight
         style={styles.button_general}
@@ -255,43 +247,40 @@ render: function() {
           </Text>
         </View>
       </TouchableHighlight>
+      <View style={styles.view_brform}/>
+      <Text style={styles.text_general}>{contentBackgroundProcessInitialLabel}</Text>
+      <Text style={styles.text_general_custom}>{contentBackgroundProcessInitialValue}</Text>
     </View>
     ;
   }
   return (
     <View style={styles.view_mainscreen}>
 
-      <Image
-        style={styles.image_banner}
-        onLoadStart={(e) => this.setState({loading: true})}
-        source={{uri:'https://raw.githubusercontent.com/jackalhan/i_aaa_ui/master/image/banner.jpg'}}
-        onProgress={(e) => this.setState({progress: Math.round(100 * e.nativeEvent.loaded / e.nativeEvent.total)})}
-        onLoad={() => this.setState({loading: false, error: false})} />
+        <Image
+          style={styles.image_banner}
+          onLoadStart={(e) => this.setState({loading: true})}
+          source={{uri:'https://raw.githubusercontent.com/jackalhan/i_aaa_ui/master/image/banner.jpg'}}
+          onProgress={(e) => this.setState({progress: Math.round(100 * e.nativeEvent.loaded / e.nativeEvent.total)})}
+          onLoad={() => this.setState({loading: false, error: false})} />
+
       <View style={styles.view_form}>
         <View style={styles.view_subform_setting}>
           <Text style={styles.text_general}>
             Auto Process
           </Text>
           <Switch
-            onValueChange={(value) => this.setState({isAutoProcess: value})}
+            onValueChange={(value) => this.setState({isManualProcess: value})}
             style={styles.switch_general}
-            value={this.state.isAutoProcess}
+            value={this.state.isManualProcess}
             />
           <Text style={styles.text_general}>
             Manual Process
           </Text>
         </View>
+        <View style={styles.view_brform}/>
         {contentManualProcess}
-        <View style={styles.view_brform}/>
-        <View style={styles.view_brform}/>
-        <View style={styles.view_brform}/>
         {contentAutoProcess}
-        <View style={styles.view_form}>
-        <Text style={styles.text_general}>{contentBackgroundProcessInitialLabel}</Text>
-        <Text style={styles.text_general_custom}>{contentBackgroundProcessInitialValue}</Text>
-        <View style={styles.view_form}></View>
-        <Text style={styles.text_general}>{contentBackgroundProcessLastLabel}</Text>
-        <Text style={styles.text_general_custom}>{contentBackgroundProcessLastValue}</Text>
+        <View style={styles.view_form_coord_info}>
         </View>
       </View>
     </View>
@@ -311,13 +300,6 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#343e4b'
   },
-  view_form: {
-    flex:5,
-    borderColor: '#343e4b',
-    alignItems:'center',
-
-
-  },
   view_subform_setting:{
     flex:1,
     flexDirection:'row',
@@ -328,7 +310,19 @@ var styles = StyleSheet.create({
   view_brform:{
     paddingTop:5
   },
-
+  view_form: {
+    flex:5,
+    borderColor: '#343e4b',
+    alignItems:'center',
+  },
+view_form_fields: {
+  flex:15,
+      //flexDirection: 'column',
+  borderColor: '#343e4b',
+  alignItems:'center',
+},
+view_form_coord_info: {
+},
 
 
 
