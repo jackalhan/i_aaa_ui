@@ -1,6 +1,6 @@
 var React = require('react-native');
 var dimensions = require('Dimensions');
-
+var MapView = require('react-native-maps');
 
 var {
   ToastAndroid,
@@ -12,6 +12,7 @@ var {
   Switch,
   TouchableHighlight,
   Alert
+
 } = React;
 
 //UNCOMMENT FOR LOCAL SERVER
@@ -31,16 +32,10 @@ var simulation = React.createClass({
     return {
       isManualProcess : true,
       executeBackgroundProcess:false,
-      test : null,
       inputDefaultValue: 'Please enter a value',
       longitude : 'Please enter a value',
       latitude :'Please enter a value',
       speed:'Please enter a value',
-      currentRegion:
-      {
-        latitude:-0.0,
-        longitude:-0.0
-      },
       propTypes: {
       onGetCoords: React.PropTypes.func.isRequired
       },
@@ -53,48 +48,28 @@ var simulation = React.createClass({
   },
 
   componentDidMount: function() {
-
       navigator.geolocation.getCurrentPosition(
-
-  (position) => {
-    console.log(position);
-    this.setState({currentRegion: {
-                    //position,
-                    latitude : position.coords.latitude,
-                    longitude : position.coords.longitude,
-                }});
-  },
-  (error) => alert(error.message),
-  {enableHighAccuracy: true, timeout: 200, maximumAge: 1000, distanceFilter:250}
-);
-navigator.geolocation.watchPosition((position) => {
-  console.log(position);
-      this.setState({currentRegion: {
-                      //position,
-                      latitude : position.coords.latitude,
-                      longitude : position.coords.longitude,
-                  }});
-      // this.setState({latitude : this.state.position.coords.latitude});
-      // this.setState({longitude : this.state.position.coords.longitude});
-      Alert.alert(this.state.currentRegion.latitude );//Alert.alert('burasi kullanilacak.');
-
-    });
+        (position) => this.setState({position}),
+        (error) => alert(error.message),
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 100}
+      );
+      navigator.geolocation.watchPosition((position) => { this.setState({position},
+                                                          this._queryAnyAccidentOverHere()) });
     },
 
 
 
-  //   componentWillUnmount: function() {
-  // navigator.geolocation.clearWatch(this.watchID);
-  // },
+    componentWillUnmount: function() {
+  navigator.geolocation.clearWatch(this.watchID);
+  },
 
   _onPressExecuteBackgroundProcess:function(){
     if (this.state.executeBackgroundProcess === true)
     {
-      this.setState({
-                      executeBackgroundProcess: false,
-                      latitude : this.state.inputDefaultValue,
-                      longitude : this.state.inputDefaultValue,
-                      speed : this.state.inputDefaultValue
+      this.setState({  executeBackgroundProcess: false,
+                      //latitude : this.state.inputDefaultValue,
+                      //longitude : this.state.inputDefaultValue,
+                      //speed : this.state.inputDefaultValue
                      });
     }
     else {
@@ -102,17 +77,28 @@ navigator.geolocation.watchPosition((position) => {
     }
   },
 
-  _onPressQueryAccident:function(){
+  _queryAnyAccidentOverHere:function (){
+    var I_AAA_REPLACE_URI = null;
+    var control = 'icerde';
+    if (this.state.isManualProcess === true)
+    {
+      I_AAA_REPLACE_URI = I_AAA_SERVICE_LINK.replace('#lat#',this.state.latitude).replace('#lon#',this.state.longitude).replace('#speed#', this.state.speed);
+    }
+    else if (this.state.isManualProcess === false)
+    {
+      I_AAA_REPLACE_URI = I_AAA_SERVICE_LINK.replace('#lat#',this.state.position.coords.latitude).replace('#lon#',this.state.position.coords.longitude).replace('#speed#', 0);
+    }
+    this._onPressQueryAccident(I_AAA_REPLACE_URI);
+  },
 
-    var I_AAA_REPLACE_URI = I_AAA_SERVICE_LINK.replace('#lat#',this.state.latitude).replace('#lon#',this.state.longitude).replace('#speed#', this.state.speed);
-    Alert.alert(I_AAA_REPLACE_URI);
-    console.log("I_AAA API is calling via " + I_AAA_REPLACE_URI);
-    fetch(I_AAA_REPLACE_URI).
+  _onPressQueryAccident:function(uri){
+
+console.log("I_AAA API is calling via " + uri);
+    fetch(uri).
     then((response) => response.json()).
     then((responseJSON) => {
       console.log(responseJSON);
-      console.log(responseJSON.text);
-      //ToastAndroid.show(responseJSON.id + ' ' + responseJSON.text, ToastAndroid.SHORT);
+      ToastAndroid.show(responseJSON.id + ' ' + responseJSON.text, ToastAndroid.LONG);
       this.setState({
         longitude : this.state.inputDefaultValue,
         latitude : this.state.inputDefaultValue,
@@ -143,7 +129,8 @@ render: function() {
   if (this.state.isManualProcess === true)
   {
     contentAutoProcess = null;
-    ToastAndroid.show('It will be executing via simulation form!', ToastAndroid.SHORT);
+    contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
+    //ToastAndroid.show('It will be executing via simulation form!', ToastAndroid.SHORT);
     contentManualProcess =
     <View style={styles.view_form_fields}>
 
@@ -155,25 +142,19 @@ render: function() {
       <TextInput
         ref={component=> this._textInputLon=component}
         style={styles.input_general}
-        keyboardType='numeric'
+        //keyboardType='numeric'
         defaultValue={this.state.inputDefaultValue}
         onFocus = {this.clearTextLon}
         onChangeText={(longitude) => this.setState({longitude})}
-        value={this.state.longitude}
-        />
-
-      <View style={styles.view_brform}/>
-      <View style={styles.view_brform}/>
-
-
-      <Text style={styles.text_general}>
-        Latitude
-      </Text>
+        value={this.state.longitude}/>
+        <Text style={styles.text_general}>
+             Latitude
+           </Text>
       <View style={styles.view_brform}/>
       <TextInput
         ref={component=> this._textInputLat=component}
         style={styles.input_general}
-        keyboardType='numeric'
+        //keyboardType='numeric'
         defaultValue={this.state.inputDefaultValue}
         onFocus = {this.clearTextLat}
         onChangeText={(latitude) => this.setState({latitude})}
@@ -189,7 +170,7 @@ render: function() {
       <TextInput
         ref={component=> this._textInputSpeed=component}
         style={styles.input_general}
-        keyboardType='numeric'
+        //keyboardType='numeric'
         defaultValue={this.state.inputDefaultValue}
         onFocus = {this.clearTextSpeed}
         onChangeText={(speed) => this.setState({speed})}
@@ -200,7 +181,7 @@ render: function() {
       <View>
         <TouchableHighlight
           style={styles.button_general}
-          onPress={this._onPressQueryAccident}>
+          onPress={this._queryAnyAccidentOverHere}>
           <View style={styles.button}>
             <Text style={styles.button_text_general}>
               Query Accident
@@ -216,23 +197,22 @@ render: function() {
 
     contentManualProcess = null;
     contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
-    ToastAndroid.show('It will be executing via background process! ', ToastAndroid.SHORT)
+    //ToastAndroid.show('It will be executing via background process! ', ToastAndroid.SHORT)
 
     if (this.state.executeBackgroundProcess === false)
     {
       buttonTextForBackgroundProcess = 'Start Background Process';
       contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
 
-
     }
     if (this.state.executeBackgroundProcess === true)
     {
       buttonTextForBackgroundProcess = 'Stop Background Process';
-      if (this.state.latitude !== this.state.inputDefaultValue)
-      {
+      //if (this.state.latitude !== this.state.inputDefaultValue)
+      //{
         contentBackgroundProcessInitialLabel = 'Latest updated position (Lat, Lon) and speed';
         contentBackgroundProcessInitialValue =  this.state.position.coords.latitude + ',' + this.state.position.coords.longitude + ' ---->  0 mph';
-      }
+      //}
 
     }
 
@@ -250,6 +230,20 @@ render: function() {
       <View style={styles.view_brform}/>
       <Text style={styles.text_general}>{contentBackgroundProcessInitialLabel}</Text>
       <Text style={styles.text_general_custom}>{contentBackgroundProcessInitialValue}</Text>
+      <MapView
+    style={styles.map}
+    region={{
+      latitude: this.state.position.coords.latitude,
+      latitudeDelta: 0.001,
+      longitude: this.state.position.coords.longitude,
+      longitudeDelta: 0.001,
+    }}
+    showsUserLocation={true}
+    annotations={[{latitude: 37.783366,
+                   longitude: -122.406831,
+                   title: 'Cafe Venue',
+                   subtitle: 'quick noshes'}]}
+   />
     </View>
     ;
   }
@@ -404,6 +398,17 @@ view_form_coord_info: {
     fontWeight:'bold',
     textAlignVertical:'center',
   },
+  map: {
+  position: 'absolute',
+  right: 0,
+  left: 0,
+  top: 60,
+  bottom: 60,
+  margin: 10,
+  borderWidth: 1,
+  borderColor: '#dddddd',
+  borderRadius: 5,
+},
 });
 
 module.exports = simulation;
