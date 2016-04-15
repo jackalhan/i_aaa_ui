@@ -1,6 +1,11 @@
-var React = require('react-native');
-var dimensions = require('Dimensions');
 var MapView = require('react-native-maps');
+var React = require('react-native');
+var Sound = require('react-native-sound');
+
+ var dimensions = require('Dimensions');
+// const fetch = require('fetch');
+// const navigator = require('navigator');
+//const randomColor = require('randomColor');
 
 var {
   ToastAndroid,
@@ -16,12 +21,25 @@ var {
 } = React;
 
 //UNCOMMENT FOR LOCAL SERVER
-//var SERVER_URI = 'http://192.168.56.1:8080';
+var SERVER_URI = 'http://192.168.56.1:8080';
 
 //UNCOMMENT FOR PROD SERVER AT UALR
-var SERVER_URI = 'http://bvm-u1-p.host.ualr.edu:8080';
+//var SERVER_URI = 'http://bvm-u1-p.host.ualr.edu:8080';
 
 var I_AAA_SERVICE_LINK = SERVER_URI + '/anyAccidentOverHere?lat=#lat#&lon=#lon#&speedOfVehicle=#speed#';
+let id = 0;
+
+
+//Load the sound file 'whoosh.mp3' from the app bundle
+var whoosh = new Sound('beep.mp3', Sound.MAIN_BUNDLE, (error) => {
+  if (error) {
+    console.log('failed to load the sound', error);
+  } else { // loaded successfully
+    console.log('duration in seconds: ' + whoosh.getDuration() +
+        'number of channels: ' + whoosh.getNumberOfChannels());
+  }
+});
+
 var simulation = React.createClass({
 
 
@@ -39,14 +57,25 @@ var simulation = React.createClass({
       propTypes: {
       onGetCoords: React.PropTypes.func.isRequired
       },
-      annotations:[{}],
       position : {
           coords:{}
-      }
-
+      },
+      annotations:[{}],
+ markers: [],
     };
   },
-
+  onMapPress(e) {
+     this.setState({
+       markers: [
+         ...this.state.markers,
+         {
+           coordinate: e.nativeEvent.coordinate,
+           key: id++,
+           color: randomColor(),
+         },
+       ],
+     });
+   },
   componentDidMount: function() {
       navigator.geolocation.getCurrentPosition(
         (position) => this.setState({position}),
@@ -57,6 +86,13 @@ var simulation = React.createClass({
                                                           this._queryAnyAccidentOverHere()) });
     },
 
+    _getAnnotations:function() {
+    return [{
+      longitude: this.state.position.longitude,
+      latitude: this.state.position.latitude,
+      title: 'You Are Here',
+    }];
+  },
 
 
     componentWillUnmount: function() {
@@ -86,7 +122,7 @@ var simulation = React.createClass({
     }
     else if (this.state.isManualProcess === false)
     {
-      I_AAA_REPLACE_URI = I_AAA_SERVICE_LINK.replace('#lat#',this.state.position.coords.latitude).replace('#lon#',this.state.position.coords.longitude).replace('#speed#', 0);
+      I_AAA_REPLACE_URI = I_AAA_SERVICE_LINK.replace('#lat#',this.state.position.coords.latitude).replace('#lon#',this.state.position.coords.longitude).replace('#speed#', 50);
     }
     this._onPressQueryAccident(I_AAA_REPLACE_URI);
   },
@@ -98,7 +134,19 @@ console.log("I_AAA API is calling via " + uri);
     then((response) => response.json()).
     then((responseJSON) => {
       console.log(responseJSON);
-      ToastAndroid.show(responseJSON.id + ' ' + responseJSON.text, ToastAndroid.LONG);
+      if (responseJSON.anyAccident === true)
+      {
+        whoosh.setVolume(1);
+        // Play the sound with an onEnd callback
+
+whoosh.play((success) => {});
+        ToastAndroid.show(responseJSON.text, 1);
+        ToastAndroid.show(responseJSON.text, 1);
+        whoosh.play((success) => {});
+        ToastAndroid.show(responseJSON.text, 1);
+
+      }
+      //ToastAndroid.show("BE CAREFUL! You are in a risk with current conditions. In the past total 4 accidents had occured with similar conditions including 4 injured and 5 killed people", ToastAndroid.LONG);
       this.setState({
         longitude : this.state.inputDefaultValue,
         latitude : this.state.inputDefaultValue,
@@ -125,15 +173,13 @@ clearTextSpeed:function(){
 render: function() {
   var buttonTextForBackgroundProcess = null;
   var contentAutoProcess, contentManualProcess = null;
-  var contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
+  var contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue, contentBackgroundProcessInitialSpeedValue = null;
   if (this.state.isManualProcess === true)
   {
     contentAutoProcess = null;
-    contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
-    //ToastAndroid.show('It will be executing via simulation form!', ToastAndroid.SHORT);
+    contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue, contentBackgroundProcessInitialSpeedValue = null;
     contentManualProcess =
-    <View style={styles.view_form_fields}>
-
+  <View style={styles.view_form_fields}>
       <View style={styles.view_brform}/>
       <View style={styles.view_brform}/>
       <Text style={styles.text_general}>
@@ -177,7 +223,6 @@ render: function() {
         value={this.state.speed}/>
         <View style={styles.view_brform}/>
         <View style={styles.view_brform}/>
-        <View style={styles.view_brform}/>
       <View>
         <TouchableHighlight
           style={styles.button_general}
@@ -196,13 +241,13 @@ render: function() {
   if (this.state.isManualProcess === false) {
 
     contentManualProcess = null;
-    contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
+    contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue, contentBackgroundProcessInitialSpeedValue = null;
     //ToastAndroid.show('It will be executing via background process! ', ToastAndroid.SHORT)
 
     if (this.state.executeBackgroundProcess === false)
     {
       buttonTextForBackgroundProcess = 'Start Background Process';
-      contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue = null;
+      contentBackgroundProcessInitialLabel,contentBackgroundProcessInitialValue, contentBackgroundProcessInitialSpeedValue = null;
 
     }
     if (this.state.executeBackgroundProcess === true)
@@ -210,8 +255,9 @@ render: function() {
       buttonTextForBackgroundProcess = 'Stop Background Process';
       //if (this.state.latitude !== this.state.inputDefaultValue)
       //{
-        contentBackgroundProcessInitialLabel = 'Latest updated position (Lat, Lon) and speed';
-        contentBackgroundProcessInitialValue =  this.state.position.coords.latitude + ',' + this.state.position.coords.longitude + ' ---->  0 mph';
+        contentBackgroundProcessInitialLabel = 'Latest updated Position (Lat, Lon)';
+        contentBackgroundProcessInitialValue =  this.state.position.coords.latitude + ' , ' + this.state.position.coords.longitude;
+        contentBackgroundProcessInitialSpeedValue = ' Speed of Vehicle : ' + ' 0 Mph';
       //}
 
     }
@@ -230,8 +276,11 @@ render: function() {
       <View style={styles.view_brform}/>
       <Text style={styles.text_general}>{contentBackgroundProcessInitialLabel}</Text>
       <Text style={styles.text_general_custom}>{contentBackgroundProcessInitialValue}</Text>
+      <Text style={styles.text_general_custom}>{contentBackgroundProcessInitialSpeedValue}</Text>
+<View style={styles.view_brform}/>
       <MapView
     style={styles.map}
+    followUserLocation={true}
     region={{
       latitude: this.state.position.coords.latitude,
       latitudeDelta: 0.001,
@@ -239,11 +288,17 @@ render: function() {
       longitudeDelta: 0.001,
     }}
     showsUserLocation={true}
-    annotations={[{latitude: 37.783366,
-                   longitude: -122.406831,
-                   title: 'Cafe Venue',
-                   subtitle: 'quick noshes'}]}
-   />
+    pitchEnabled={true}
+    annotations={this._getAnnotations()}
+   >
+   {this.state.markers.map(marker => (
+            <MapView.Marker
+              key={marker.key}
+              coordinate={marker.coordinate}
+              pinColor={marker.color}
+            />
+          ))}
+      </MapView>
     </View>
     ;
   }

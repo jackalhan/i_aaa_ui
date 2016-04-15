@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -31,10 +31,10 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.22.2/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.22.2/res/values/values.xml -->
     <eat-comment/>
     <color name="catalyst_redbox_background">#eecc0000</color>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values/base_colors.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values/base_colors.xml -->
     <eat-comment/>
     <color name="common_action_bar_splitter">#d2d2d2</color>
     <color name="common_google_signin_btn_text_dark_default">@android:color/white</color>
@@ -53,7 +53,7 @@
     <color name="common_plus_signin_btn_text_light_disabled">#FFAAAAAA</color>
     <color name="common_plus_signin_btn_text_light_focused">#FF737373</color>
     <color name="common_plus_signin_btn_text_light_pressed">#DE000000</color>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
@@ -196,10 +196,10 @@
     <item format="float" name="highlight_alpha_material_colored" type="dimen">0.26</item>
     <item format="float" name="highlight_alpha_material_dark" type="dimen">0.20</item>
     <item format="float" name="highlight_alpha_material_light" type="dimen">0.12</item>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <dimen name="item_touch_helper_max_drag_scroll_per_frame">20dp</dimen>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <dimen name="notification_large_icon_height">64dp</dimen>
     <dimen name="notification_large_icon_width">64dp</dimen>
@@ -210,10 +210,10 @@
     <item name="action_menu_divider" type="id"/>
     <item name="action_menu_presenter" type="id"/>
     <item name="home" type="id"/>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <item name="item_touch_helper_previous_elevation" type="id"/>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <item name="progress_circular" type="id"/>
     <item name="progress_horizontal" type="id"/>
@@ -223,10 +223,10 @@
     <integer name="abc_config_activityShortDur">150</integer>
     <integer name="abc_max_action_buttons">2</integer>
     <integer name="cancel_button_image_alpha">127</integer>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/res/values/version.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/res/values/version.xml -->
     <eat-comment/>
     <integer name="google_play_services_version">8487000</integer>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <integer name="status_bar_notification_info_maxnum">999</integer>
     <string name="abc_action_bar_home_description">Navigate home</string>
@@ -246,14 +246,14 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">I-AAA</string>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/res/values/auth_strings.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/res/values/auth_strings.xml -->
     <eat-comment/>
     <string name="auth_google_play_services_client_facebook_display_name">Facebook</string>
     <string name="auth_google_play_services_client_google_display_name">Google</string>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.22.2/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.22.2/res/values/values.xml -->
     <eat-comment/>
     <string name="catalyst_debugjs" project="catalyst" translatable="false">Debug in Chrome</string>
     <string name="catalyst_debugjs_off" project="catalyst" translatable="false">Stop Chrome Debugging</string>
@@ -275,7 +275,7 @@
     <string name="catalyst_settings_title" project="catalyst" translatable="false">Catalyst Dev Settings</string>
     <string name="catalyst_start_profile" project="catalyst" translatable="false">Start Profile</string>
     <string name="catalyst_stop_profile" project="catalyst" translatable="false">Stop Profile</string>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values/base_strings.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values/base_strings.xml -->
     <eat-comment/>
     <string name="common_google_play_services_api_unavailable_text"><ns1:g id="app_name">%1$s</ns1:g> requires one or more Google Play services that are not currently available. Please contact the developer for assistance.</string>
     <string msgid="2523291102206661146" name="common_google_play_services_enable_button">Enable Google Play services</string>
@@ -294,10 +294,10 @@
     <string name="common_google_play_services_restricted_profile_title">Restricted Profile</string>
     <string name="common_google_play_services_sign_in_failed_text">Error signing in the specified account. Please choose a different account.</string>
     <string name="common_google_play_services_sign_in_failed_title">Sign in failed</string>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/res/values/common_strings.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/res/values/common_strings.xml -->
     <eat-comment/>
     <string name="common_google_play_services_unknown_issue"><ns1:g id="app_name">%1$s</ns1:g> is having trouble with Google Play services. If the problem persists, please contact the developer for assistance.</string>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values/base_strings.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/values/base_strings.xml -->
     <eat-comment/>
     <string name="common_google_play_services_unsupported_text"><ns1:g id="app_name">%1$s</ns1:g> relies on Google Play services, which is not supported by your device. Contact the manufacturer for assistance.</string>
     <string name="common_google_play_services_unsupported_title">Google Play services</string>
@@ -310,25 +310,25 @@
     <string name="common_open_on_phone">Open on phone</string>
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.22.2/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.22.2/res/values/values.xml -->
     <eat-comment/>
     <style name="Animation.Catalyst.RedBox" parent="@android:style/Animation">
     <item name="android:windowEnterAnimation">@anim/catalyst_push_up_in</item>
     <item name="android:windowExitAnimation">@anim/catalyst_push_up_out</item>
   </style>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
     </style>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.AlertDialog.AppCompat" parent="android:Widget">
         <item name="android:layout">@layout/abc_alert_dialog_material</item>
@@ -1450,10 +1450,10 @@
     </style>
     <style name="TextAppearance.Widget.AppCompat.Toolbar.Title" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Title">
     </style>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.22.2/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.22.2/res/values/values.xml -->
     <eat-comment/>
     <style name="Theme"/>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <style name="Theme.AppCompat" parent="Base.Theme.AppCompat"/>
     <style name="Theme.AppCompat.CompactMenu" parent="Base.Theme.AppCompat.CompactMenu"/>
@@ -1477,7 +1477,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.22.2/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.22.2/res/values/values.xml -->
     <eat-comment/>
     <style name="Theme.Catalyst"/>
     <style name="Theme.Catalyst.RedBox" parent="@style/Theme.AppCompat.DialogWhenLarge">
@@ -1496,7 +1496,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    <!-- From: file:/home/jackalhan/Development/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
+    <!-- From: file:/home/jackalhan/Development/Projects/GitHub/i_aaa_ui/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
     <eat-comment/>
     <style name="ThemeOverlay.AppCompat" parent="Base.ThemeOverlay.AppCompat"/>
     <style name="ThemeOverlay.AppCompat.ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar"/>
