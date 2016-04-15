@@ -142,7 +142,7 @@ console.log("I_AAA API is calling via " + uri);
 whoosh.play((success) => {});
         ToastAndroid.show(responseJSON.text, 1);
         ToastAndroid.show(responseJSON.text, 1);
-        whoosh.play((success) => {});
+        ToastAndroid.show(responseJSON.text, 1);
         ToastAndroid.show(responseJSON.text, 1);
 
       }
